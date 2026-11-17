@@ -33,6 +33,36 @@
   const estadoVacio = () => ({ items: [], prefs: { vista: 'pendientes', prioridad: 0, orden: 'plazo' } });
   let estado = cargar();
 
+  // Paquetes de tareas que llegan con una actualización. Cada id se agrega una sola vez:
+  // si la borras, no vuelve a aparecer (los ids ya entregados quedan en CLAVE_PAQUETES).
+  const CLAVE_PAQUETES = 'al-dia:paquetes';
+  const PAQUETES = [
+    { id: 'w1117-guia-legal', titulo: 'Terminar la guía legal', plazo: '2026-11-17', prioridad: 1,
+      notas: 'Tarea vigente según don William (audio 17-nov). Después de la guía legal se ven otros temas.' },
+    { id: 'w1117-recordar-comunicado', titulo: 'Recordarle a don William el comunicado de Reembolso por devolución', plazo: '2026-11-17', prioridad: 1,
+      notas: 'Pidió que se lo recuerdes durante el día, cuando vayas avanzando. Con ese comunicado se hace el flujo.' },
+    { id: 'w1117-flujograma-reembolso', titulo: 'Flujograma: Reembolso por devolución', plazo: '2026-11-20', prioridad: 1,
+      notas: 'Primer flujo a mapear, a partir del comunicado de don William (él ayuda). Plazo puesto por mí: ajústalo si William da otro.' },
+    { id: 'w1117-procedimiento-reembolso', titulo: 'Procedimiento escrito: Reembolso por devolución', plazo: '2026-11-24', prioridad: 2,
+      notas: 'Usar el prompt para Claude que dará don William y el mismo formato de los procedimientos de Isaac. Va después del flujograma.' },
+    { id: 'w1117-dudas-audio', titulo: 'Confirmar dudas del audio de don William', plazo: '2026-11-18', prioridad: 3,
+      notas: '¿Qué es el "panel de SELEAN"? ¿Cómo se escriben Gonçoy, Tiara y Malla? Ver PDF en Falabella\\Reuniones.' },
+    { id: 'w1117-accesos-portal', titulo: 'Revisar Portal SAC y los accesos que entregue don William', plazo: '', prioridad: 3,
+      notas: 'Los comunicados de procedimientos se cargan en el Portal SAC (lo hizo Elisa).' },
+  ];
+  (function aplicarPaquetes() {
+    let entregados = [];
+    try { entregados = JSON.parse(localStorage.getItem(CLAVE_PAQUETES) || '[]'); } catch { entregados = []; }
+    const nuevos = PAQUETES.filter((p) => !entregados.includes(p.id) && !estado.items.some((i) => i.id === p.id));
+    if (!nuevos.length) return;
+    const ahora = Date.now();
+    nuevos.forEach((p, k) => estado.items.push({ ...p, tipo: 'tarea', plazoHora: '', creada: ahora + k, lista: false, aplazos: 0 }));
+    try {
+      localStorage.setItem(CLAVE, JSON.stringify(estado));
+      localStorage.setItem(CLAVE_PAQUETES, JSON.stringify([...entregados, ...nuevos.map((p) => p.id)]));
+    } catch {}
+  })();
+
   function cargar() {
     try {
       const raw = localStorage.getItem(CLAVE);

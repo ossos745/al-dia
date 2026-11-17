@@ -1,7 +1,7 @@
 // Service worker de Al Día.
 // IMPORTANTE: cada publicación debe cambiar VERSION (publicar.ps1 lo hace solo).
 // Al cambiar este archivo, el teléfono detecta la versión nueva y la app avisa "Hay una nueva versión".
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = 'al-dia-' + VERSION;
 const ARCHIVOS = [
   './',
