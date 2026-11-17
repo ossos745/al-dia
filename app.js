@@ -49,6 +49,10 @@
       notas: '¿Qué es el "panel de SELEAN"? ¿Cómo se escriben Gonçoy, Tiara y Malla? Ver PDF en Falabella\\Reuniones.' },
     { id: 'w1117-accesos-portal', titulo: 'Revisar Portal SAC y los accesos que entregue don William', plazo: '', prioridad: 3,
       notas: 'Los comunicados de procedimientos se cargan en el Portal SAC (lo hizo Elisa).' },
+    { id: 'w1117-revisar-borrador-flujo', titulo: 'Revisar con don William el borrador del flujograma Reembolso por devolución', plazo: '2026-11-18', prioridad: 1,
+      notas: 'Archivo: Falabella\\Flujogramas\\Reembolso por devolucion - borrador v0.1.drawio. Confirmar: cómo llega el caso a BO (cola), si tienda Falabella también va al Focal STS Corp, qué hace el Focal y en qué plazo, cómo se reembolsa el saldo (¿NC / Gestión de reembolso? ¿1P vs 3P?), cierre y plantilla, si aplica a LR/SERNAC, y si N2 es "Devoluciones" o "Cambios y devoluciones".' },
+    { id: 'w1117-pedir-drawio', titulo: 'Pedir el archivo «Diagramas tipificaciones» (.drawio) a William o Isaac', plazo: '2026-11-18', prioridad: 2,
+      notas: 'Para pegar el flujo en la misma página/estilo que los demás N3.' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
@@ -71,6 +75,10 @@
         const it = estado.items.find((i) => i.id === id);
         if (it && !/flujo online/i.test(it.titulo)) it.titulo += ' (flujo online)';
       });
+    } },
+    { id: 'aj-1117-comunicado-recibido', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1117-recordar-comunicado');
+      if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); it.notas = (it.notas ? it.notas + ' ' : '') + 'Recibido el 17-nov: «Nuevo N3 reembolso por devolucion 1.pdf».'; }
     } },
   ];
   (function aplicarAjustes() {
