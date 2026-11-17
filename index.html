@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Al Día</title>
+  <meta name="description" content="Tareas con plazo, prioridades y reuniones para el trabajo.">
+  <meta name="theme-color" content="#aad500">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Al Día">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">✓</span>
+      <div>
+        <h1>Al Día</h1>
+        <p id="resumen" class="resumen">Cargando…</p>
+      </div>
+    </div>
+    <button id="btnMas" class="icon-btn" aria-label="Más opciones" title="Más opciones">⋮</button>
+  </header>
+
+  <div id="bannerVersion" class="banner" hidden>
+    <span>Hay una nueva versión de Al Día.</span>
+    <button id="btnActualizar" class="btn btn-dark btn-sm">Actualizar</button>
+  </div>
+
+  <main id="app">
+    <!-- Barra de herramientas (búsqueda, filtros, orden) -->
+    <section id="herramientas" class="tools">
+      <div class="search">
+        <span aria-hidden="true">🔍</span>
+        <input id="buscar" type="search" placeholder="Buscar tareas y reuniones" autocomplete="off">
+      </div>
+      <div class="chips" id="chipsPrioridad" role="group" aria-label="Filtrar por prioridad">
+        <button class="chip activo" data-p="0">Todas</button>
+        <button class="chip" data-p="1"><i class="dot p1"></i>Principales</button>
+        <button class="chip" data-p="2"><i class="dot p2"></i>Secundarias</button>
+        <button class="chip" data-p="3"><i class="dot p3"></i>Terciarias</button>
+      </div>
+      <div class="orden">
+        <label for="orden">Ordenar por</label>
+        <select id="orden">
+          <option value="plazo">Plazo (más urgente primero)</option>
+          <option value="prioridad">Prioridad</option>
+          <option value="creacion">Más recientes</option>
+          <option value="nombre">Nombre (A–Z)</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="lista" class="lista" aria-live="polite"></section>
+  </main>
+
+  <button id="fab" class="fab" aria-label="Agregar">＋</button>
+
+  <nav class="tabs" aria-label="Vistas">
+    <button class="tab activo" data-vista="pendientes"><span class="tab-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>Pendientes</span><b class="badge" id="badgePend"></b></button>
+    <button class="tab" data-vista="reuniones"><span class="tab-ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><span>Reuniones</span><b class="badge" id="badgeReu"></b></button>
+    <button class="tab" data-vista="listas"><span class="tab-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.5 9.5"/></svg></span><span>Listas</span></button>
+  </nav>
+
+  <!-- Formulario de tarea / reunión -->
+  <dialog id="dlgForm" class="sheet">
+    <form id="form" method="dialog">
+      <div class="sheet-head">
+        <h2 id="formTitulo">Nueva tarea</h2>
+        <button type="button" class="icon-btn" data-cerrar aria-label="Cerrar">✕</button>
+      </div>
+      <div class="segmento" id="segTipo" role="radiogroup" aria-label="Tipo">
+        <button type="button" data-tipo="tarea" class="activo">Tarea</button>
+        <button type="button" data-tipo="reunion">Reunión</button>
+      </div>
+      <label class="campo">
+        <span>Nombre</span>
+        <input name="titulo" required maxlength="140" placeholder="Ej: Revisar informe de calidad semanal">
+      </label>
+
+      <div class="solo-tarea">
+        <div class="fila">
+          <label class="campo"><span>Hasta cuándo</span><input name="plazo" type="date"></label>
+          <label class="campo"><span>Hora (opcional)</span><input name="plazoHora" type="time"></label>
+        </div>
+        <div class="atajos" id="atajosPlazo">
+          <button type="button" data-dias="0">Hoy</button>
+          <button type="button" data-dias="1">Mañana</button>
+          <button type="button" data-dias="viernes">Este viernes</button>
+          <button type="button" data-dias="7">En 1 semana</button>
+        </div>
+        <fieldset class="campo">
+          <legend>Prioridad</legend>
+          <div class="segmento prioridad" id="segPrioridad">
+            <button type="button" data-p="1"><i class="dot p1"></i>Principal</button>
+            <button type="button" data-p="2" class="activo"><i class="dot p2"></i>Secundaria</button>
+            <button type="button" data-p="3"><i class="dot p3"></i>Terciaria</button>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="solo-reunion" hidden>
+        <div class="fila">
+          <label class="campo"><span>Fecha</span><input name="fecha" type="date"></label>
+          <label class="campo"><span>Hora</span><input name="hora" type="time"></label>
+        </div>
+        <div class="fila">
+          <label class="campo"><span>Duración</span>
+            <select name="duracion">
+              <option value="15">15 min</option>
+              <option value="30" selected>30 min</option>
+              <option value="45">45 min</option>
+              <option value="60">1 hora</option>
+              <option value="90">1 h 30 min</option>
+              <option value="120">2 horas</option>
+              <option value="180">3 horas</option>
+            </select>
+          </label>
+          <label class="campo"><span>Lugar o link</span><input name="lugar" placeholder="Sala, Meet, Teams…"></label>
+        </div>
+      </div>
+
+      <label class="campo">
+        <span>Notas</span>
+        <textarea name="notas" rows="3" placeholder="Detalle, responsables, links…"></textarea>
+      </label>
+
+      <div class="sheet-acciones">
+        <button type="button" id="btnEliminar" class="btn btn-ghost peligro" hidden>Eliminar</button>
+        <span class="flex1"></span>
+        <button type="button" class="btn btn-ghost" data-cerrar>Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
+      </div>
+      <p class="aviso-gcal solo-reunion" hidden>Al guardar podrás agregarla a Google Calendar.</p>
+    </form>
+  </dialog>
+
+  <!-- Aplazar -->
+  <dialog id="dlgAplazar" class="sheet sheet-chico">
+    <div class="sheet-head">
+      <h2>Aplazar</h2>
+      <button type="button" class="icon-btn" data-cerrar aria-label="Cerrar">✕</button>
+    </div>
+    <p id="aplazarInfo" class="muted"></p>
+    <div class="grid-botones">
+      <button class="btn btn-outline" data-aplazar="1">+1 día</button>
+      <button class="btn btn-outline" data-aplazar="2">+2 días</button>
+      <button class="btn btn-outline" data-aplazar="habil">Próximo día hábil</button>
+      <button class="btn btn-outline" data-aplazar="7">+1 semana</button>
+    </div>
+    <label class="campo"><span>O elige otra fecha</span>
+      <div class="fila"><input id="aplazarFecha" type="date"><button class="btn btn-primary" id="btnAplazarFecha">Aplicar</button></div>
+    </label>
+  </dialog>
+
+  <!-- Más opciones -->
+  <dialog id="dlgMas" class="sheet sheet-chico">
+    <div class="sheet-head">
+      <h2>Más opciones</h2>
+      <button type="button" class="icon-btn" data-cerrar aria-label="Cerrar">✕</button>
+    </div>
+    <div class="lista-opciones">
+      <button id="btnExportar" class="opcion"><b>Exportar respaldo</b><small>Descarga un archivo .json con todas tus tareas y reuniones.</small></button>
+      <label class="opcion" for="inputImportar"><b>Importar respaldo</b><small>Reemplaza los datos de este teléfono por los del archivo.</small></label>
+      <input id="inputImportar" type="file" accept=".json,application/json" hidden>
+      <button id="btnExportarIcs" class="opcion"><b>Exportar reuniones a calendario (.ics)</b><small>Todas las reuniones futuras en un archivo para Google Calendar u Outlook.</small></button>
+      <button id="btnInstalar" class="opcion" hidden><b>Instalar en el teléfono</b><small>Agrega Al Día a la pantalla de inicio.</small></button>
+      <button id="btnBuscarAct" class="opcion"><b>Buscar actualización</b><small id="txtVersion">Versión instalada: —</small></button>
+    </div>
+    <p class="muted chico">Los datos se guardan solo en este dispositivo. Exporta un respaldo de vez en cuando.</p>
+  </dialog>
+
+  <div id="toast" class="toast" hidden><span id="toastTxt"></span><button id="toastBtn" class="toast-btn">Deshacer</button></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
