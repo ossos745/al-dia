@@ -39,11 +39,11 @@
   const PAQUETES = [
     { id: 'w1117-guia-legal', titulo: 'Terminar la guía legal', plazo: '2026-11-17', prioridad: 1,
       notas: 'Tarea vigente según don William (audio 17-nov). Después de la guía legal se ven otros temas.' },
-    { id: 'w1117-recordar-comunicado', titulo: 'Recordarle a don William el comunicado de Reembolso por devolución', plazo: '2026-11-17', prioridad: 1,
+    { id: 'w1117-recordar-comunicado', titulo: 'Recordarle a don William el comunicado de Reembolso por devolución (flujo online)', plazo: '2026-11-17', prioridad: 1,
       notas: 'Pidió que se lo recuerdes durante el día, cuando vayas avanzando. Con ese comunicado se hace el flujo.' },
-    { id: 'w1117-flujograma-reembolso', titulo: 'Flujograma: Reembolso por devolución', plazo: '2026-11-20', prioridad: 1,
+    { id: 'w1117-flujograma-reembolso', titulo: 'Flujograma: Reembolso por devolución (flujo online)', plazo: '2026-11-20', prioridad: 1,
       notas: 'Primer flujo a mapear, a partir del comunicado de don William (él ayuda). Plazo puesto por mí: ajústalo si William da otro.' },
-    { id: 'w1117-procedimiento-reembolso', titulo: 'Procedimiento escrito: Reembolso por devolución', plazo: '2026-11-24', prioridad: 2,
+    { id: 'w1117-procedimiento-reembolso', titulo: 'Procedimiento escrito: Reembolso por devolución (flujo online)', plazo: '2026-11-24', prioridad: 2,
       notas: 'Usar el prompt para Claude que dará don William y el mismo formato de los procedimientos de Isaac. Va después del flujograma.' },
     { id: 'w1117-dudas-audio', titulo: 'Confirmar dudas del audio de don William', plazo: '2026-11-18', prioridad: 3,
       notas: '¿Qué es el "panel de SELEAN"? ¿Cómo se escriben Gonçoy, Tiara y Malla? Ver PDF en Falabella\\Reuniones.' },
@@ -60,6 +60,28 @@
     try {
       localStorage.setItem(CLAVE, JSON.stringify(estado));
       localStorage.setItem(CLAVE_PAQUETES, JSON.stringify([...entregados, ...nuevos.map((p) => p.id)]));
+    } catch {}
+  })();
+
+  // Ajustes de una sola vez a tareas que ya llegaron en un paquete (si ya las tenías, se corrige el título).
+  const CLAVE_AJUSTES = 'al-dia:ajustes';
+  const AJUSTES = [
+    { id: 'aj-1117-flujo-online', fn: () => {
+      ['w1117-recordar-comunicado', 'w1117-flujograma-reembolso', 'w1117-procedimiento-reembolso'].forEach((id) => {
+        const it = estado.items.find((i) => i.id === id);
+        if (it && !/flujo online/i.test(it.titulo)) it.titulo += ' (flujo online)';
+      });
+    } },
+  ];
+  (function aplicarAjustes() {
+    let hechos = [];
+    try { hechos = JSON.parse(localStorage.getItem(CLAVE_AJUSTES) || '[]'); } catch { hechos = []; }
+    const pendientes = AJUSTES.filter((a) => !hechos.includes(a.id));
+    if (!pendientes.length) return;
+    pendientes.forEach((a) => a.fn());
+    try {
+      localStorage.setItem(CLAVE, JSON.stringify(estado));
+      localStorage.setItem(CLAVE_AJUSTES, JSON.stringify([...hechos, ...pendientes.map((a) => a.id)]));
     } catch {}
   })();
 
