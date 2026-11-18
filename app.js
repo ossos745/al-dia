@@ -53,6 +53,23 @@
       notas: 'Archivo: Falabella\\Flujogramas\\Reembolso por devolucion - borrador v0.1.drawio. Confirmar: cómo llega el caso a BO (cola), si tienda Falabella también va al Focal STS Corp, qué hace el Focal y en qué plazo, cómo se reembolsa el saldo (¿NC / Gestión de reembolso? ¿1P vs 3P?), cierre y plantilla, si aplica a LR/SERNAC, y si N2 es "Devoluciones" o "Cambios y devoluciones".' },
     { id: 'w1117-pedir-drawio', titulo: 'Pedir el archivo «Diagramas tipificaciones» (.drawio) a William o Isaac', plazo: '2026-11-18', prioridad: 2,
       notas: 'Para pegar el flujo en la misma página/estilo que los demás N3.' },
+    // Audio «Tarea» de don William, 18-nov: reporte Connect – Cobro/Anulación Mandato
+    { id: 'w1118-confirmar-regla-connect', titulo: 'Confirmar con don William las dudas del reporte Connect – Cobro/Anulación Mandato', plazo: '2026-11-19', prioridad: 1,
+      notas: '1) El aviso SAC 210726 se contradice: ¿FO ingresa por N1 Reclamo, o el Front Regional ingresa por Pedido Solicitud y el BO 1P retipifica? 2) ¿Qué cuenta como «mal creado desde operaciones»: el Bot (Pantalla Única), el BO o ambos? 3) ¿El reporte va sobre las abiertas del lunes o sobre las creadas en la semana? 4) ¿Qué plazo quiso decir con «no el lunes que viene sino el que sigue… hasta el miércoles de la otra semana»?' },
+    { id: 'w1118-pedir-escrito-tarea', titulo: 'Pedirle a don William el escrito y el comunicado de la tarea Connect', plazo: '2026-11-19', prioridad: 2,
+      notas: 'Dijo que te enviaría la tarea por escrito y el comunicado de Cobro/Anulación Mandato. Ya tienes el aviso «210726 Reforzamiento N1 Connect» y la base.' },
+    { id: 'w1118-revisar-pistas', titulo: 'Leer los 18 casos con «pista en descripción» del reporte Connect', plazo: '2026-11-20', prioridad: 2,
+      notas: 'Excel: Falabella\\Reportes\\2026-11-18 Reporte Connect Cobro-Anulación Mandato.xlsx, hoja Detalle, columna K. Ver si el N4 calza con lo que dice la descripción (p. ej. NC por cobro que menciona «desconoce»).' },
+    { id: 'w1118-presentar-reporte', titulo: 'Mostrarle a don William el primer reporte Connect – Cobro/Anulación Mandato', plazo: '2026-11-20', prioridad: 1,
+      notas: 'Llevar el Excel y el PDF (Falabella\\Reuniones). Resultado preliminar: 3 sin N4, 89 debían ser Reclamo, 54 debían ser Pedido Solicitud, 113 OK. Pedir feedback para pulirlo como reporte semanal.' },
+    { id: 'w1118-reporte-lunes', titulo: 'Reporte semanal Connect – Cobro/Anulación Mandato (lunes)', plazo: '2026-11-23', prioridad: 1,
+      notas: 'Cada lunes: descargar las abiertas de la tipología desde el panel de abiertas, pegarlas en la hoja Detalle del Excel (columnas A–H y L) y arrastrar las fórmulas I–J. Al terminar, aplazar esta tarea +1 semana.' },
+    { id: 'w1118-panel-abiertas', titulo: 'Practicar con el panel de abiertas: filtros, M7–M30, reapertura y recontacto', plazo: '', prioridad: 3,
+      notas: 'Filtrar por tipología, área (ej. Línea Roja) y propietario, y descargar. Meta: 85 % cerrado antes de 10 días. Detalle en el Glosario SAC.' },
+    { id: 'w1118-patron-ia', titulo: 'Idea: patrón por palabras clave / IA para saber si va por Pedido o Reclamo', plazo: '', prioridad: 3,
+      notas: 'Propuesta de don William: usar la descripción del caso para detectar si está bien creado. Base: la columna «Pista en descripción» del Excel.' },
+    { id: 'w1118-automatizacion-connect', titulo: 'Idea: automatización pequeña con Connect (ver con don William)', plazo: '', prioridad: 3,
+      notas: 'Mencionada en los audios del 17 y 18-nov: algo sencillo para ir familiarizándose, de menos a más.' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
