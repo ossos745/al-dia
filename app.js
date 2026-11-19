@@ -70,6 +70,19 @@
       notas: 'Propuesta de don William: usar la descripción del caso para detectar si está bien creado. Base: la columna «Pista en descripción» del Excel.' },
     { id: 'w1118-automatizacion-connect', titulo: 'Idea: automatización pequeña con Connect (ver con don William)', plazo: '', prioridad: 3,
       notas: 'Mencionada en los audios del 17 y 18-nov: algo sencillo para ir familiarizándose, de menos a más.' },
+    // Audio «Tarea 3», 18-nov 17:57: revisión del Excel con don William (se usa la versión con base completa)
+    { id: 'w1119-revisar-73', titulo: 'Revisar los 73 casos de Desconocimiento creados como Pedido Solicitud', plazo: '2026-11-19', prioridad: 1,
+      notas: 'Foco principal de don William: «estos 73 deberían ser Reclamo sí o sí, hay que levantarlo». Ver quién y qué área los tiene (71 entraron por Teléfono y 2 por Chat). Filtrar en el Excel base completa: N4 = Desconocimiento y N1 = Pedido Solicitud.' },
+    { id: 'w1119-dotacion', titulo: 'Pedir la dotación por área y agregar «Área» al Excel Connect', plazo: '2026-11-19', prioridad: 1,
+      notas: 'Cruzar el propietario del caso con la dotación (Línea Roja, SERNAC, Backoffice…) y agregar una tabla dinámica por área. El reporte final va por área. Todo con fórmulas.' },
+    { id: 'w1119-titulo-neutro', titulo: 'Cambiar el título «¿Quién lo creó mal?» del Excel por uno neutro', plazo: '2026-11-19', prioridad: 2,
+      notas: 'Pedido de don William, para no herir susceptibilidades. Propuesta: «Por canal de creación».' },
+    { id: 'w1119-aclarar-metodo', titulo: 'Explicarle a don William cómo funciona el análisis del Excel (no es IA)', plazo: '2026-11-19', prioridad: 2,
+      notas: 'Él entendió que la IA leyó las descripciones. En realidad: «Resultado» aplica la regla del aviso al N4 y «Pista» busca palabras clave en la descripción. Decírselo antes de validar con Backoffice.' },
+    { id: 'w1119-reunion-pamela', titulo: 'Coordinar reunión con Pamela Pizarro (Backoffice) para validar el reporte Connect', plazo: '2026-11-20', prioridad: 2,
+      notas: 'El BO recibe la mayor parte de este N3. Revisar casos puntuales juntos, ver si el análisis acierta y afinar las palabras clave de la columna «Pista».' },
+    { id: 'w1119-bloqueo-reclamo', titulo: 'Averiguar desde cuándo rige el bloqueo de N1 Reclamo → Pedido Solicitud', plazo: '2026-11-20', prioridad: 1,
+      notas: 'Don William: van a bloquear el cambio de Reclamo a Pedido (al revés sí se podrá). Un Reclamo mal creado obligará a cancelar y crear otro caso. Preguntar qué se hace con los 54 casos del Bot creados como Reclamo que debían ser Pedido Solicitud.' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
@@ -96,6 +109,18 @@
     { id: 'aj-1117-comunicado-recibido', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1117-recordar-comunicado');
       if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); it.notas = (it.notas ? it.notas + ' ' : '') + 'Recibido el 17-nov: «Nuevo N3 reembolso por devolucion 1.pdf».'; }
+    } },
+    { id: 'aj-1119-reporte-presentado', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1118-presentar-reporte');
+      if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); it.notas = (it.notas ? it.notas + ' ' : '') + 'Revisado con don William el 18-nov (audio «Tarea 3»): le gustó; pidió reporte por área, título neutro y validar con Pamela Pizarro.'; }
+    } },
+    { id: 'aj-1119-reporte-lunes', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1118-reporte-lunes');
+      if (it) it.notas = 'Usar el Excel «(base completa)». Cada lunes: descargar las abiertas de la tipología desde el panel, pegarlas en la hoja Base bajo la tabla (mismas 59 columnas), revisar que BH–BJ tengan fórmula y Datos → Actualizar todo. Enviarlo al Backoffice para que retipifiquen. Al terminar, aplazar +1 semana.';
+    } },
+    { id: 'aj-1119-pistas', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
+      if (it) it.notas = 'Excel «(base completa)», hoja Base, columna «Pista en descripción». Ver si el N4 calza con la descripción. Llevar los dudosos a la reunión con Pamela Pizarro para afinar las palabras clave.';
     } },
   ];
   (function aplicarAjustes() {
