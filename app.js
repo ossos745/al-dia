@@ -83,6 +83,8 @@
       notas: 'El BO recibe la mayor parte de este N3. Revisar casos puntuales juntos, ver si el análisis acierta y afinar las palabras clave de la columna «Pista».' },
     { id: 'w1119-bloqueo-reclamo', titulo: 'Averiguar desde cuándo rige el bloqueo de N1 Reclamo → Pedido Solicitud', plazo: '2026-11-20', prioridad: 1,
       notas: 'Don William: van a bloquear el cambio de Reclamo a Pedido (al revés sí se podrá). Un Reclamo mal creado obligará a cancelar y crear otro caso. Preguntar qué se hace con los 54 casos del Bot creados como Reclamo que debían ser Pedido Solicitud.' },
+    { id: 'w1119-propietarios-sin-area', titulo: 'Preguntar el área de los 9 propietarios que no están en la dotación', plazo: '2026-11-20', prioridad: 1,
+      notas: 'No aparecen en «DOTACION DE PLATAFORMA.xlsx» y tienen 141 de los 259 casos (36 de los 73 posibles fraudes). La lista está en la hoja Dotación del Excel Connect (filas con Área en blanco). ¿Son de otra plataforma, de un proveedor externo o están desvinculados? Cuando se sepa, completar la columna Área y Datos → Actualizar todo.' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
@@ -129,6 +131,10 @@
     { id: 'aj-1119-foco73-excel', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1119-revisar-73');
       if (it) it.notas = 'Foco de don William: «estos 73 deberían ser Reclamo sí o sí». En el Excel base completa: hoja «Por área», tabla 5 (por área y propietario), o filtrar la columna «Alerta» = «Posible fraude…» en la hoja Base. Revisar casos en Connect Front y ver qué área los tiene, una vez cargada la dotación.';
+    } },
+    { id: 'aj-1119-dotacion-cargada', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1119-dotacion');
+      if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); it.notas += ' Hecho el 19-nov con «DOTACION DE PLATAFORMA.xlsx»: 18 de 28 propietarios con área (Sub-categoría). Faltan 9 que no están en la dotación (ver tarea aparte).'; }
     } },
     { id: 'aj-1119-pistas', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
