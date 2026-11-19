@@ -154,6 +154,10 @@
       const it = estado.items.find((i) => i.id === 'w1118-reporte-lunes');
       if (it) { it.plazo = '2026-11-23'; it.notas = 'Descargar los casos CREADOS entre el lunes y el domingo anteriores (no las abiertas). Primer reporte: lunes 23-nov con lo creado del 16 al 22-nov. Pegar en la hoja Base del Excel «(base completa)» (eliminar filas de la tabla y pegar valores en A2). El error se atribuye al BO en la retipificación.'; }
     } },
+    { id: 'aj-1119-excel-error-bo-hecho', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1119-excel-error-bo');
+      if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); }
+    } },
     { id: 'aj-1119-pistas', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
       if (it) it.notas = 'Excel «(base completa)», hoja Base, columna «Pista en descripción». Ver si el N4 calza con la descripción. Llevar los dudosos a la reunión con Pamela Pizarro para afinar las palabras clave.';
