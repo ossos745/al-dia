@@ -85,6 +85,11 @@
       notas: 'Don William: van a bloquear el cambio de Reclamo a Pedido (al revés sí se podrá). Un Reclamo mal creado obligará a cancelar y crear otro caso. Preguntar qué se hace con los 54 casos del Bot creados como Reclamo que debían ser Pedido Solicitud.' },
     { id: 'w1119-propietarios-sin-area', titulo: 'Preguntar el área de los 9 propietarios que no están en la dotación', plazo: '2026-11-20', prioridad: 1,
       notas: 'No aparecen en «DOTACION DE PLATAFORMA.xlsx» y tienen 141 de los 259 casos (36 de los 73 posibles fraudes). La lista está en la hoja Dotación del Excel Connect (filas con Área en blanco). ¿Son de otra plataforma, de un proveedor externo o están desvinculados? Cuando se sepa, completar la columna Área y Datos → Actualizar todo.' },
+    // Audio «RESPUESTAS A TUS DUDAS» (19-nov)
+    { id: 'w1119-excel-error-bo', titulo: 'Ajustar el Excel Connect: error atribuido al BO en la retipificación', plazo: '2026-11-23', prioridad: 2,
+      notas: 'Regla confirmada: todo entra como N1 Pedido Solicitud y el BO retipifica a Reclamo si corresponde. Revisar títulos y la hoja Regla para que no culpen al Front.' },
+    { id: 'w1119-bot-reclamo', titulo: 'Preguntar a don William por qué el Bot crea los casos como Reclamo', plazo: '2026-11-23', prioridad: 3,
+      notas: 'La regla dice que todo entra como Pedido Solicitud, pero los casos del Bot (Pantalla Única) entran como Reclamo. ¿Excepción o error de ingreso?' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
@@ -139,6 +144,15 @@
     { id: 'aj-1119-sin-area-provisorio', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1119-propietarios-sin-area');
       if (it) { it.titulo = 'Confirmar con don William el área de los 9 propietarios fuera de la dotación'; it.notas = 'Por ahora están marcados como «BACK OFFICE 1P (fuera de dotación)», porque por regla de asignación todo este N3 va a FAL_CL_BO_General. No son SERNAC: ninguno tiene ID regulatorio. Tienen 141 de los 259 casos. Si William dice otra área, se cambia en la hoja Dotación y luego Datos → Actualizar todo.'; }
+    } },
+    // Audio «RESPUESTAS A TUS DUDAS» (19-nov): William responde las dudas del reporte Connect
+    { id: 'aj-1119-dudas-respondidas', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1118-confirmar-regla-connect');
+      if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); it.notas = 'Respondido (19-nov): todo entra como N1 Pedido Solicitud y el BO retipifica a Reclamo si corresponde; los errores son del BO en la retipificación; la base son los casos creados en la semana (lunes a domingo).'; }
+    } },
+    { id: 'aj-1119-reporte-lunes-creadas', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1118-reporte-lunes');
+      if (it) { it.plazo = '2026-11-23'; it.notas = 'Descargar los casos CREADOS entre el lunes y el domingo anteriores (no las abiertas). Primer reporte: lunes 23-nov con lo creado del 16 al 22-nov. Pegar en la hoja Base del Excel «(base completa)» (eliminar filas de la tabla y pegar valores en A2). El error se atribuye al BO en la retipificación.'; }
     } },
     { id: 'aj-1119-pistas', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
