@@ -118,6 +118,18 @@
       const it = estado.items.find((i) => i.id === 'w1118-reporte-lunes');
       if (it) it.notas = 'Usar el Excel «(base completa)». Cada lunes: descargar las abiertas de la tipología desde el panel, pegarlas en la hoja Base bajo la tabla (mismas 59 columnas), revisar que BH–BJ tengan fórmula y Datos → Actualizar todo. Enviarlo al Backoffice para que retipifiquen. Al terminar, aplazar +1 semana.';
     } },
+    { id: 'aj-1119-titulo-hecho', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1119-titulo-neutro');
+      if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); it.notas += ' Hecho el 19-nov: ahora dice «Por canal de creación».'; }
+    } },
+    { id: 'aj-1119-dotacion-excel', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1119-dotacion');
+      if (it) { it.titulo = 'Conseguir la dotación por área y completarla en el Excel Connect'; it.notas = 'El Excel ya tiene la hoja «Dotación» (los 28 propietarios de la base, con el Área en blanco), la columna «Área» en la base y la hoja «Por área» con las tablas dinámicas. Falta la dotación oficial: completar la columna Área, o pegar la dotación (nombre en A, área en B), y luego Datos → Actualizar todo.'; }
+    } },
+    { id: 'aj-1119-foco73-excel', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1119-revisar-73');
+      if (it) it.notas = 'Foco de don William: «estos 73 deberían ser Reclamo sí o sí». En el Excel base completa: hoja «Por área», tabla 5 (por área y propietario), o filtrar la columna «Alerta» = «Posible fraude…» en la hoja Base. Revisar casos en Connect Front y ver qué área los tiene, una vez cargada la dotación.';
+    } },
     { id: 'aj-1119-pistas', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
       if (it) it.notas = 'Excel «(base completa)», hoja Base, columna «Pista en descripción». Ver si el N4 calza con la descripción. Llevar los dudosos a la reunión con Pamela Pizarro para afinar las palabras clave.';
