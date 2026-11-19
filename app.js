@@ -136,6 +136,10 @@
       const it = estado.items.find((i) => i.id === 'w1119-dotacion');
       if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); it.notas += ' Hecho el 19-nov con «DOTACION DE PLATAFORMA.xlsx»: 18 de 28 propietarios con área (Sub-categoría). Faltan 9 que no están en la dotación (ver tarea aparte).'; }
     } },
+    { id: 'aj-1119-sin-area-provisorio', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1119-propietarios-sin-area');
+      if (it) { it.titulo = 'Confirmar con don William el área de los 9 propietarios fuera de la dotación'; it.notas = 'Por ahora están marcados como «BACK OFFICE 1P (fuera de dotación)», porque por regla de asignación todo este N3 va a FAL_CL_BO_General. No son SERNAC: ninguno tiene ID regulatorio. Tienen 141 de los 259 casos. Si William dice otra área, se cambia en la hoja Dotación y luego Datos → Actualizar todo.'; }
+    } },
     { id: 'aj-1119-pistas', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
       if (it) it.notas = 'Excel «(base completa)», hoja Base, columna «Pista en descripción». Ver si el N4 calza con la descripción. Llevar los dudosos a la reunión con Pamela Pizarro para afinar las palabras clave.';
