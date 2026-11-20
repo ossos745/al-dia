@@ -176,6 +176,11 @@
       const it = estado.items.find((i) => i.id === 'w1119-offline-reporte');
       if (it) it.notas += ' Regla: el reclamo de Flujo Offline corresponde con policies RECHAZADAS; si están aprobadas, el cliente va a la tienda y listo, así que no debería estar en este N3.';
     } },
+    // Criterio de Benjamín (20-nov): el diagrama publicado manda
+    { id: 'aj-1120-offline-diagrama-manda', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1119-offline-avisos');
+      if (it) { it.titulo = 'Avisar a don William lo que no calza con el diagrama del Flujo Offline'; it.notas = 'Manda el diagrama (aprobado y publicado). Errores de otras fuentes: (1) el maestro de asignación permite 1P + N4 Flujo Offline (filas 542 y 547); (2) el procedimiento .docx tiene invertido el paso 1 («entregada → totalizar»); (3) su alcance no dice «solo 3P»; (4) su paso 4 dice «reasignarse» en vez del carril offline; (5) sus plazos BO 5 / LR 10 días no salen en el diagrama.'; }
+    } },
     { id: 'aj-1119-pistas', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
       if (it) it.notas = 'Excel «(base completa)», hoja Base, columna «Pista en descripción». Ver si el N4 calza con la descripción. Llevar los dudosos a la reunión con Pamela Pizarro para afinar las palabras clave.';
