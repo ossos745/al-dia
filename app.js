@@ -171,6 +171,11 @@
       const it = estado.items.find((i) => i.id === 'w1119-excel-error-bo');
       if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); }
     } },
+    // Respuesta de Benjamín (20-nov): el Flujo Offline corresponde con policies rechazadas
+    { id: 'aj-1120-offline-policies', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1119-offline-reporte');
+      if (it) it.notas += ' Regla: el reclamo de Flujo Offline corresponde con policies RECHAZADAS; si están aprobadas, el cliente va a la tienda y listo, así que no debería estar en este N3.';
+    } },
     { id: 'aj-1119-pistas', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
       if (it) it.notas = 'Excel «(base completa)», hoja Base, columna «Pista en descripción». Ver si el N4 calza con la descripción. Llevar los dudosos a la reunión con Pamela Pizarro para afinar las palabras clave.';
