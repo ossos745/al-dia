@@ -90,6 +90,19 @@
       notas: 'Regla confirmada: todo entra como N1 Pedido Solicitud y el BO retipifica a Reclamo si corresponde. Revisar títulos y la hoja Regla para que no culpen al Front.' },
     { id: 'w1119-bot-reclamo', titulo: 'Preguntar a don William por qué el Bot crea los casos como Reclamo', plazo: '2026-11-23', prioridad: 3,
       notas: 'La regla dice que todo entra como Pedido Solicitud, pero los casos del Bot (Pantalla Única) entran como Reclamo. ¿Excepción o error de ingreso?' },
+    // Audio «Explicación diagrama-Flujo offline y mas» (19-nov, 17:42): depurar el N3 Flujo Offline
+    { id: 'w1119-offline-base-queries', titulo: 'Flujo Offline: recibir la base de don William y las queries de policies y RLO', plazo: '2026-11-20', prioridad: 2,
+      notas: 'William quedó de mandar el 20-nov una base del N3 «Problemas para devolver la orden de compra» con la query de policies lista (si aún no hay acceso al panel de abiertas 1P/3P). Pedir también la query de RLO de Andrés. La de policies busca por Order Name: números entre comillas y separados por comas.' },
+    { id: 'w1119-offline-muestra-0a4', titulo: 'Flujo Offline: revisar una muestra de casos abiertos creados hace 0–4 días', plazo: '2026-11-23', prioridad: 1,
+      notas: 'Unos 5 casos para empezar: ¿cumplen el procedimiento?, ¿qué se detecta? Ojo con los mal tipificados que son Reembolso por devolución, los creados por la tienda por PU (debía ser YTL → Línea Roja) y los de un caso por SKU. Plazo puesto por Claude.' },
+    { id: 'w1119-offline-1p', titulo: 'Flujo Offline: listar los casos 1P con N4 Flujo Offline (11) y proponer qué hacer', plazo: '2026-11-23', prioridad: 1,
+      notas: 'El flujo es solo 3P Mini Ticket. Opciones de William: devolverlos a la operación para que los rehaga, o cerrarlos nosotros según antigüedad. Plazo puesto por Claude.' },
+    { id: 'w1119-offline-reporte', titulo: 'Flujo Offline: diseñar el reporte semanal de control del N3 para las áreas', plazo: '2026-11-27', prioridad: 1,
+      notas: 'Cruzar la base con las queries de policies y RLO: 1P mal tipificados, estado de policies, RLO vigente o vencida, casos de Reembolso por devolución. Que sea conciso y se envíe a las áreas para que cierren o corrijan. Plazo puesto por Claude.' },
+    { id: 'w1119-offline-avisos', titulo: 'Avisar a don William los errores de fuente del Flujo Offline', plazo: '2026-11-24', prioridad: 2,
+      notas: '(1) El maestro de asignación permite 1P + N4 Flujo Offline (filas 542 y 547). (2) El procedimiento .docx tiene invertido el paso 1 (dice «si está entregada → totalizar»). (3) Su alcance no dice «solo 3P». (4) Paso 4: «reasignarse» en vez de ir al carril offline. (5) Sigue la duda «¿Policies rechazado? No → solicitar evidencia».' },
+    { id: 'w1119-offline-tottus', titulo: 'Preguntar a don William a quién de tiendas consultar por la devolución rechazada en Tottus', plazo: '', prioridad: 3,
+      notas: 'Producto «alta gama» con RLO vigente y en plazo que Tottus no recibió. William mencionó a dos contactos de tiendas.' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
