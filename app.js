@@ -527,11 +527,13 @@
     cambiar(`${it.tipo === 'tarea' ? 'Tarea' : 'Reunión'} eliminada`, () => { estado.items = estado.items.filter((i) => i.id !== id); });
   });
 
-  // Cerrar hojas: botón ✕ / Cancelar o tocar fuera.
+  // Cerrar hojas: botón ✕ o tocar fuera. El formulario de tarea/reunión
+  // solo se cierra con la ✕ (o al guardar), para no perder lo escrito.
+  dlgForm.addEventListener('cancel', (e) => e.preventDefault()); // tecla Esc / botón atrás
   $$('dialog').forEach((d) => {
     d.addEventListener('click', (e) => {
       if (e.target.closest('[data-cerrar]')) d.close();
-      else if (e.target === d) { const r = d.getBoundingClientRect(); if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) d.close(); }
+      else if (e.target === d && d !== dlgForm) { const r = d.getBoundingClientRect(); if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) d.close(); }
     });
   });
 
