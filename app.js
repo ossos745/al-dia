@@ -103,6 +103,17 @@
       notas: '(1) El maestro de asignación permite 1P + N4 Flujo Offline (filas 542 y 547). (2) El procedimiento .docx tiene invertido el paso 1 (dice «si está entregada → totalizar»). (3) Su alcance no dice «solo 3P». (4) Paso 4: «reasignarse» en vez de ir al carril offline. (5) Sigue la duda «¿Policies rechazado? No → solicitar evidencia».' },
     { id: 'w1119-offline-tottus', titulo: 'Preguntar a don William a quién de tiendas consultar por la devolución rechazada en Tottus', plazo: '', prioridad: 3,
       notas: 'Producto «alta gama» con RLO vigente y en plazo que Tottus no recibió. William mencionó a dos contactos de tiendas.' },
+    // Audio «Revisión Problema con la Giftcard V1» (20-nov, ~13:00): rehacer el flujo por tipo de gift card
+    { id: 'w1120-gc-flujo-por-tipo', titulo: 'Gift Card: rehacer el flujo v2 abierto por tipo de gift card', plazo: '2026-11-24', prioridad: 1,
+      notas: 'Decisión de la revisión con William y Pamela: quiebre (nueva GC por Jarvis con evidencia), corporativa (se extiende una vez), empresa (no se extiende) e intangible (otra área). Cruzar con los tipos del instructivo. Listo para presentarlo el martes.' },
+    { id: 'w1120-gc-preguntas-juan', titulo: 'Gift Card: preparar las preguntas para Juan Fuentes', plazo: '2026-11-23', prioridad: 1,
+      notas: 'Plazo de extensión de las corporativas, rol de Venta Empresa, restricciones de uso por tipo, intangibles, novios, número de GC y SLA. Lista en la ficha del audio (Falabella\\Reuniones).' },
+    { id: 'w1120-gc-reunion-juan', titulo: 'Gift Card: reunión en la oficina con Juan Fuentes para presentar el flujo', plazo: '2026-11-24', prioridad: 1,
+      notas: 'Acordada para el martes 24-nov en la oficina. Hora por confirmar: cuando la tengas, crea la reunión en la app para pasarla a Google Calendar.' },
+    { id: 'w1120-gc-numero-gc', titulo: 'Gift Card: agregar al flujo cómo pedir el número de la gift card', plazo: '2026-11-24', prioridad: 2,
+      notas: 'Sin el número no se puede gestionar. No hay plantilla ni número de intentos definido; Pamela lo verá con el área de comunicaciones. Dejarlo como paso del flujo para validarlo.' },
+    { id: 'w1120-gc-avisos', titulo: 'Gift Card: avisar a don William las diferencias entre la reunión y el instructivo', plazo: '2026-11-24', prioridad: 2,
+      notas: 'Tipos de GC distintos (Anticipadas/FXC vs quiebre/corporativa/empresa), Venta Empresa extendía según el instructivo, restricciones de uso distintas y cómo se resuelve la GC de quiebre sin código.' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
