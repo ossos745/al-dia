@@ -114,6 +114,11 @@
       notas: 'Sin el número no se puede gestionar. No hay plantilla ni número de intentos definido; Pamela lo verá con el área de comunicaciones. Dejarlo como paso del flujo para validarlo.' },
     { id: 'w1120-gc-avisos', titulo: 'Gift Card: avisar a don William las diferencias entre la reunión y el instructivo', plazo: '2026-11-24', prioridad: 2,
       notas: 'Tipos de GC distintos (Anticipadas/FXC vs quiebre/corporativa/empresa), Venta Empresa extendía según el instructivo, restricciones de uso distintas y cómo se resuelve la GC de quiebre sin código.' },
+    // Audio «Reinsistencia» (24-nov, 13:01): base de datos de reinsistencias
+    { id: 'w1124-rein-base', titulo: 'Reinsistencias: conseguir la base de datos y confirmar el encargo', plazo: '2026-11-25', prioridad: 1,
+      notas: 'Reinsistencia = el cliente vuelve a reclamar por lo mismo después del cierre. Confirmar si la base es solo de falsa entrega, quién la envía, de qué periodo y qué entregable se espera. Plazo puesto por Claude (el audio no dio).' },
+    { id: 'w1124-rein-evidencia', titulo: 'Reinsistencias: revisar la evidencia de entrega con el criterio de evidencia válida', plazo: '', prioridad: 2,
+      notas: 'Evidencia válida: en el mismo caso, foto del lugar de entrega (casa o su entorno), con la etiqueta del producto y la numeración de la casa o dirección visibles.' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
