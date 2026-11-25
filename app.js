@@ -119,6 +119,17 @@
       notas: 'Reinsistencia = el cliente vuelve a reclamar por lo mismo después del cierre. Confirmar si la base es solo de falsa entrega, quién la envía, de qué periodo y qué entregable se espera. Plazo puesto por Claude (el audio no dio).' },
     { id: 'w1124-rein-evidencia', titulo: 'Reinsistencias: revisar la evidencia de entrega con el criterio de evidencia válida', plazo: '', prioridad: 2,
       notas: 'Evidencia válida: en el mismo caso, foto del lugar de entrega (casa o su entorno), con la etiqueta del producto y la numeración de la casa o dirección visibles.' },
+    // Reunión con William, Pamela y Lorena (25-nov, ~11:11): homologación boleta/factura y N3 de tienda
+    { id: 'w1125-minuta-boleta', titulo: 'Minuta «Solicitud cambiar boleta/factura» (reunión 25-nov)', plazo: '2026-11-26', prioridad: 1,
+      notas: 'Acuerdos: 2 N3 boleta/factura (Copia/solicitud y Cambio/corrección de datos) para 1P y 3P, Pedido Solicitud; diferencia por tarea (BO General solo corrección; grupos sensibles también cambio boleta→factura). Tienda: Problema en tienda a cola LR con 6 N4; nuevo N3 Gestión complementaria. William la envía a Mario por correo. Plazo puesto por Claude (freeze desde el 26-nov).' },
+    { id: 'w1125-foto-notas', titulo: 'Pedir la foto de las notas de la reunión del 25-nov para contrastar la minuta', plazo: '2026-11-26', prioridad: 1, notas: '' },
+    { id: 'w1125-dudas-minuta', titulo: 'Confirmar con don William las dudas de la reunión antes de enviar la minuta', plazo: '2026-11-26', prioridad: 1,
+      notas: 'Nombres exactos de las tareas, hasta cuándo es el freeze, fecha de Gestión complementaria, si Problema en tienda deja de ser FCR, qué pasa con Actitud del personal, y si Gestión complementaria reemplaza al Reproceso de reembolso en los flujos publicados.' },
+    { id: 'w1125-reproceso-flujos', titulo: 'Listar los flujos que usan «Reproceso de reembolso» (por Gestión complementaria)', plazo: '', prioridad: 2,
+      notas: 'Flujo Offline, Daño a la propiedad, C&D. Actualizarlos cuando exista el N3 nuevo.' },
+    { id: 'w1125-boleta-flujos', titulo: 'Cuando se homologue: actualizar flujos/procedimientos de boleta/factura', plazo: '', prioridad: 2, notas: 'Queda como está hasta que Marito cambie las reglas.' },
+    { id: 'w1125-nexus-bo3p', titulo: 'Seguir el Nexus pendiente: N3 que llegan al BO 3P y Línea Roja arrastra', plazo: '', prioridad: 3,
+      notas: 'Espera lo que tiene Andrés y lo de César (Problemas con personal a la cola LR).' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
