@@ -330,9 +330,10 @@
     elOrden.value = estado.prefs.orden;
     $('#chipsPrioridad').hidden = vista === 'reuniones';
     $('.orden').hidden = vista === 'reuniones';
-    elBuscar.placeholder = vista === 'reuniones' ? 'Buscar reuniones' : vista === 'listas' ? 'Buscar en tareas listas' : 'Buscar tareas';
+    elBuscar.placeholder = vista === 'reuniones' ? 'Buscar reuniones' : vista === 'listas' ? 'Buscar en tareas listas' : vista === 'vencidas' ? 'Buscar en vencidas' : 'Buscar tareas';
 
     if (vista === 'pendientes') renderPendientes();
+    else if (vista === 'vencidas') renderVencidas();
     else if (vista === 'reuniones') renderReuniones();
     else renderListas();
     renderResumen();
@@ -355,14 +356,42 @@
     return [...items].sort(cmp);
   }
 
-  function renderPendientes() {
-    const tareas = filtrar(porPrioridad(estado.items.filter((i) => i.tipo === 'tarea' && !i.lista)));
-    if (!tareas.length) return vacio(estado.items.some((i) => i.tipo === 'tarea' && !i.lista) ? '🔍' : '🎉',
-      estado.items.some((i) => i.tipo === 'tarea' && !i.lista) ? 'No hay tareas con ese filtro.' : '¡Estás al día! Agrega una tarea con el botón ＋.');
-    const ord = ordenar(tareas);
+  const esVencida = (t) => estadoPlazo(t).grupo === 'vencidas';
+
+  // Pestaña Vencidas: solo tareas pendientes cuyo plazo ya pasó (la más atrasada primero).
+  function renderVencidas() {
+    const todas = estado.items.filter((i) => i.tipo === 'tarea' && !i.lista && esVencida(i));
+    const tareas = filtrar(porPrioridad(todas));
+    if (!tareas.length) return vacio(todas.length ? '🔍' : '✅', todas.length ? 'No hay vencidas con ese filtro.' : 'No tienes tareas vencidas.');
+    const o = estado.prefs.orden;
+    let ord = ordenar(tareas);
     let html = '';
+    if (o === 'prioridad') {
+      for (const p of [1, 2, 3]) {
+        const del = ord.filter((t) => t.prioridad === p);
+        if (del.length) html += tituloGrupo(PRIO[p].replace(/l$/, 'les').replace(/a$/, 'as'), del.length) + del.map(cardTarea).join('');
+      }
+    } else {
+      html = tituloGrupo('Vencidas', ord.length, 'rojo') + ord.map(cardTarea).join('');
+    }
+    elLista.innerHTML = html;
+  }
+
+  function renderPendientes() {
+    const noListas = estado.items.filter((i) => i.tipo === 'tarea' && !i.lista);
+    const alDia = noListas.filter((t) => !esVencida(t));
+    const nVenc = noListas.length - alDia.length;
+    const tareas = filtrar(porPrioridad(alDia));
+    const avisoVenc = nVenc ? `<button class="aviso-vencidas" data-accion="ir-vencidas">⚠ Tienes ${nVenc} tarea${nVenc === 1 ? '' : 's'} vencida${nVenc === 1 ? '' : 's'} · Ver</button>` : '';
+    if (!tareas.length) {
+      vacio(alDia.length ? '🔍' : '🎉', alDia.length ? 'No hay tareas con ese filtro.' : nVenc ? 'No tienes tareas pendientes dentro de plazo.' : '¡Estás al día! Agrega una tarea con el botón ＋.');
+      elLista.insertAdjacentHTML('afterbegin', avisoVenc);
+      return;
+    }
+    const ord = ordenar(tareas);
+    let html = avisoVenc;
     if (estado.prefs.orden === 'plazo') {
-      const grupos = [['vencidas', 'Vencidas', 'rojo'], ['hoy', 'Hoy'], ['manana', 'Mañana'], ['semana', 'Próximos 7 días'], ['despues', 'Más adelante'], [undefined, 'Sin plazo']];
+      const grupos = [['hoy', 'Hoy'], ['manana', 'Mañana'], ['semana', 'Próximos 7 días'], ['despues', 'Más adelante'], [undefined, 'Sin plazo']];
       for (const [g, nombre, clase] of grupos) {
         const del = ord.filter((t) => estadoPlazo(t).grupo === g);
         if (del.length) html += tituloGrupo(nombre, del.length, clase) + del.map(cardTarea).join('');
@@ -373,7 +402,7 @@
         if (del.length) html += tituloGrupo(PRIO[p].replace(/l$/, 'les').replace(/a$/, 'as'), del.length) + del.map(cardTarea).join('');
       }
     } else {
-      html = ord.map(cardTarea).join('');
+      html += ord.map(cardTarea).join('');
     }
     elLista.innerHTML = html;
   }
@@ -481,7 +510,8 @@
     if (reuHoy) partes.push(`${reuHoy} reunión${reuHoy === 1 ? '' : 'es'} hoy`);
     const f = fechaBonita(hoy());
     $('#resumen').textContent = `${f.charAt(0).toUpperCase() + f.slice(1)} · ${partes.join(' · ')}`;
-    $('#badgePend').textContent = venc + deHoy || '';
+    $('#badgePend').textContent = deHoy || '';
+    $('#badgeVenc').textContent = venc || '';
     $('#badgeReu').textContent = reuHoy || '';
     document.title = venc + deHoy ? `(${venc + deHoy}) Al Día` : 'Al Día';
   }
@@ -643,6 +673,7 @@
   elLista.addEventListener('click', (e) => {
     const el = e.target.closest('[data-accion]'); if (!el) return;
     const accion = el.dataset.accion;
+    if (accion === 'ir-vencidas') { estado.prefs.vista = 'vencidas'; guardar(); render(); window.scrollTo({ top: 0 }); return; }
     if (accion === 'vaciar') {
       const n = estado.items.filter((i) => i.tipo === 'tarea' && i.lista).length;
       if (n && confirm(`¿Borrar las ${n} tareas listas? Podrás deshacerlo justo después.`))

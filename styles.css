@@ -164,7 +164,7 @@ main { max-width: 720px; margin: 0 auto; padding: 0 16px; }
 /* Navegación inferior */
 .tabs {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 15;
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(4, 1fr);
   background: var(--blanco); border-top: 1px solid var(--borde);
   padding-bottom: var(--safe-b);
 }
@@ -185,6 +185,12 @@ main { max-width: 720px; margin: 0 auto; padding: 0 16px; }
   background: var(--rojo); color: var(--blanco); font-size: 11px; line-height: 18px;
 }
 .badge:empty { display: none; }
+.badge-suave { background: var(--naranjo); }
+.tab[data-vista="vencidas"].activo { color: var(--rojo); }
+.aviso-vencidas {
+  width: 100%; text-align: left; border: 1px solid #f6c3c8; background: #fde8ea; color: var(--rojo);
+  border-radius: var(--radio); padding: 10px 12px; font-weight: 800; font-size: 13.5px;
+}
 
 /* Botones */
 .btn { border: 0; border-radius: 10px; padding: 10px 16px; font-weight: 800; font-size: 14.5px; }
