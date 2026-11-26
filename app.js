@@ -130,6 +130,20 @@
     { id: 'w1125-boleta-flujos', titulo: 'Cuando se homologue: actualizar flujos/procedimientos de boleta/factura', plazo: '', prioridad: 2, notas: 'Queda como está hasta que Marito cambie las reglas.' },
     { id: 'w1125-nexus-bo3p', titulo: 'Seguir el Nexus pendiente: N3 que llegan al BO 3P y Línea Roja arrastra', plazo: '', prioridad: 3,
       notas: 'Espera lo que tiene Andrés y lo de César (Problemas con personal a la cola LR).' },
+    // Reunión de equipo con William (26-nov, ~11:27): panel con Constanza, reinsistencias, Cupón promocional
+    { id: 'w1126-panel-folios', titulo: 'Panel de folios M20 / fecha pactada con Constanza (ella responsable)', plazo: '2026-11-27', prioridad: 1,
+      notas: 'Reemplazar el reporte diario de Andrés por un panel Looker. 1) Ver si el panel de Coni usa la misma tabla. 2) Columnas: N3, cambio/devolución, folio, fecha folio, fecha comprometida, estado (futura/incumplida), área (Producto con falla de funcionamiento → Servicio Técnico; Línea Roja). Filtros por fecha y descarga Excel. Plazo: «viernes» (¿27-nov o 4-dic?).' },
+    { id: 'w1126-correo-acceso-bd', titulo: 'Enviar a William el correo para pedir acceso al proyecto de base de datos', plazo: '2026-11-26', prioridad: 1,
+      notas: 'William lo reenvía. Confirmar a quién va dirigido.' },
+    { id: 'w1126-rein-revision', titulo: 'Reinsistencias: revisar evidencias en la planilla (~10 casos al día, entre los tres)', plazo: '2026-11-27', prioridad: 1,
+      notas: 'William explica el 26 o 27-nov. Evidencia = fotos dentro de una tarea. Válida si se ve bulto entregado, fachada, persona recibiendo y número de OC. Reunión los viernes.' },
+    { id: 'w1126-cupon-promocional', titulo: 'Flujo Cupón promocional: agendar con la supervisora que lo explica', plazo: '2026-11-30', prioridad: 1,
+      notas: 'Ir a la mesa de coordinadoras y preguntar a Lorena Angelini [?] con qué supervisora verlo. Confirmar en la regla de asignación si es solo 1P. Plazo puesto por Claude.' },
+    { id: 'w1126-connect-python', titulo: 'Connect: revisar la lógica con Pamela y luego pasar el reporte a Python', plazo: '', prioridad: 2,
+      notas: 'Cuando vuelva Pamela. Semanal; el equipo corre los reportes con Python + Jenkins.' },
+    { id: 'w1126-ia-fotos', titulo: 'Probar con 3 casos si la IA puede validar las fotos de evidencia de entrega', plazo: '', prioridad: 2, notas: '' },
+    { id: 'w1126-metrica-antiguedad', titulo: 'Recibir de Isaac la métrica de antigüedad (script, condiciones, carpetas)', plazo: '', prioridad: 2,
+      notas: 'Se calcula los primeros días del mes sobre el mes anterior.' },
   ];
   (function aplicarPaquetes() {
     let entregados = [];
@@ -211,6 +225,18 @@
     { id: 'aj-1119-pistas', fn: () => {
       const it = estado.items.find((i) => i.id === 'w1118-revisar-pistas');
       if (it) it.notas = 'Excel «(base completa)», hoja Base, columna «Pista en descripción». Ver si el N4 calza con la descripción. Llevar los dudosos a la reunión con Pamela Pizarro para afinar las palabras clave.';
+    } },
+    // Reunión de equipo 26-nov: cierra tareas anteriores
+    { id: 'aj-1126-cierres', fn: () => {
+      const cerrar = {
+        'w1125-minuta-boleta': 'Enviada (26-nov). William pide la solicitud formal a Mario Torres desde el correo de Benjamín.',
+        'w1120-gc-flujo-por-tipo': 'Subido al portal para revalidar (26-nov). Validación: 5 días hábiles.',
+        'w1124-rein-base': 'Encargo aclarado el 26-nov: revisión de evidencias en planilla entre tres (ver tarea nueva).',
+      };
+      Object.entries(cerrar).forEach(([id, nota]) => {
+        const it = estado.items.find((i) => i.id === id);
+        if (it && !it.lista) { it.lista = true; it.listaEn = Date.now(); it.notas = (it.notas ? it.notas + ' ' : '') + nota; }
+      });
     } },
   ];
   (function aplicarAjustes() {
