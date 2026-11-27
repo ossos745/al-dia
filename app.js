@@ -139,6 +139,15 @@
       notas: 'Ir a la mesa de coordinadoras y preguntar a Lorena Angelini [?] con qué supervisora verlo. Confirmar en la regla de asignación si es solo 1P. Plazo puesto por Claude.' },
     { id: 'w1126-connect-python', titulo: 'Connect: revisar la lógica con Pamela y luego pasar el reporte a Python', plazo: '', prioridad: 2,
       notas: 'Cuando vuelva Pamela. Semanal; el equipo corre los reportes con Python + Jenkins.' },
+    // Reunión con Coni (27-nov, ~12:25): panel de folios C&D y marca M20
+    { id: 'w1127-revisar-panel', titulo: 'Revisar el panel de Coni en Looker Studio y anotar qué falta', plazo: '2026-11-30', prioridad: 1,
+      notas: 'Ya tienes acceso con edición. Comparar con lo pedido por William: N2, N3, tipo de folio, folio, fecha del folio, fecha pactada, área, estado y marca M20.' },
+    { id: 'w1127-consulta-m20', titulo: 'Consulta del panel con marca M20 y los campos pedidos', plazo: '2026-11-30', prioridad: 1,
+      notas: 'Marca M20 cruzando TB_SEGUIMIENTO_CYD con TB_M20 por caso. Agregar N2 y fecha del folio. Área con regla Servicio Técnico. Sin datos de clientes.' },
+    { id: 'w1127-propuesta-scripts', titulo: 'Proponer a Coni las columnas que faltan en sus scripts', plazo: '2026-11-30', prioridad: 1,
+      notas: 'Fecha del folio desde el orquestador (RLO_FECHA_LINEA, XO_FECHA_LINEA, RO_DCREACION) y marca M20. No correr sus scripts: escriben en BigQuery con su credencial.' },
+    { id: 'w1127-aclarar-campo-m20', titulo: 'Aclarar con Coni qué campo agregar al M20 y quién modifica cada script', plazo: '2026-11-30', prioridad: 2, notas: '' },
+    { id: 'w1127-reunion-coni', titulo: 'Reunión con Coni para juntar las tablas del panel (lunes en la tarde)', plazo: '2026-11-30', prioridad: 1, notas: '' },
     { id: 'w1126-metrica-antiguedad', titulo: 'Recibir de Isaac la métrica de antigüedad (script, condiciones, carpetas)', plazo: '', prioridad: 2,
       notas: 'Se calcula los primeros días del mes sobre el mes anterior.' },
   ];
@@ -226,6 +235,10 @@
     // 26-nov: Benjamín aclara que el correo de acceso a BD y la prueba de IA son tareas de Constanza
     { id: 'aj-1126-quitar-coni', fn: () => {
       estado.items = estado.items.filter((i) => !['w1126-correo-acceso-bd', 'w1126-ia-fotos'].includes(i.id));
+    } },
+    { id: 'aj-1127-panel-contexto', fn: () => {
+      const it = estado.items.find((i) => i.id === 'w1126-panel-folios');
+      if (it) { it.plazo = '2026-11-30'; it.notas = 'Coni es la responsable. Fuente: TB_SEGUIMIENTO_CYD (tabla de Coni) + marca M20 (TB_M20). Panel en Looker Studio, con acceso de edición. Ver las tareas del 27-nov.'; }
     } },
     // Reunión de equipo 26-nov: cierra tareas anteriores
     { id: 'aj-1126-cierres', fn: () => {
